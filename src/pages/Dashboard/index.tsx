@@ -41,7 +41,7 @@ const Dashboard: React.FC = () => {
         setTransactions(transactions);
         setBalance(balance);
       } catch (error) {
-        console.log('Load transactions error: ', error)
+        console.log('Load transactions error: ', error.response.error)
       }
     }
 
