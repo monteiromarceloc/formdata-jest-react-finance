@@ -35,10 +35,14 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     async function loadTransactions(): Promise<void> {
-      const res = await api.get('/transactions')
-      const { transactions, balance } = res.data;
-      setTransactions(transactions);
-      setBalance(balance);
+      try {
+        const res = await api.get('/transactions')
+        const { transactions, balance } = res.data;
+        setTransactions(transactions);
+        setBalance(balance);
+      } catch (error) {
+        console.log('Load transactions error: ', error)
+      }
     }
 
     loadTransactions();
@@ -95,7 +99,7 @@ const Dashboard: React.FC = () => {
                   <td className="title">{title}</td>
                   <td className={type}>{`${type === 'outcome' ? '- ' : ''}${formatValue(value)}`}</td>
                   <td>{category?.title || '-'}</td>
-                  <td>{created_at}</td>
+                  <td>{new Date(created_at).toLocaleDateString('pt-br')}</td>
                 </tr>)
               }
             </tbody>
